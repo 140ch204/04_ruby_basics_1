@@ -1,26 +1,31 @@
 def start_game
-    # Init
-    player_position = 1
-    puts "Bonjour, le jeu commence :-)"
-    puts "Marche : #{player_position}, "
-    nb_draw = 0
+    # Start the game
+    # Return the number of attemp to reach 10
+
+    # Initialization : 
+    player_position = 1 # Variable for the position of player :  1 is the first step
+    puts "Bonjour, le jeu commence :-)" 
+    puts "Marche : #{player_position}, " 
+    nb_draw = 0 # count the number of atttempt : no attempt done for the moment
 
     # Process
-    while player_position !=10
-        player_position = next_position(player_position,next_move)
-        puts "Marche : #{player_position}, "
-        nb_draw += 1
+
+    while player_position != 10 # loop until we are on the final step 10
+        player_position = next_position(player_position,next_move) # Calculate the new position
+        puts "Marche : #{player_position}, " # Display the new position
+        nb_draw += 1 # increase the attempt counter
 
     end
 
-    puts "Félicitations ! Vous etes arrivé à la marche #{player_position} :-)"
-    puts nb_draw
+    puts "Félicitations ! Vous êtes arrivé à la marche #{player_position} :-)" # Victory display
+    puts nb_draw # For debug
     return nb_draw
 end
 
 
 def draw
-    # return a number within 1 and 6
+    # return a number within 1 and 6. 
+
     # Init
     prng = Random.new
     #Results
@@ -62,16 +67,24 @@ def next_position(init, move)
 
 end
 
-def average_finish_time
-    #init
-    average = start_game.to_f
+def average_finish_time(nb)
+    # 
+    # Return the average of attempt to reach 10 calculated with nb games
+    # nb = number of game of averaging
 
-    #Process
-    for i in (2..10) 
-        average = ((i-1) * average.to_f + start_game.to_f)/i
-        puts "La moyenne de lancé de dés pour atteindre la marche 10 est de #{average}"
+    # initialization of average with the first value 
+    average = start_game.to_f 
+
+    # Process
+    for i in (2..nb) 
+        #Average algorithm : Moyenne pondérée entre les anciennes partie et la nouvelle
+        average = ((i-1) * average.to_f + start_game.to_f)/( i ) 
+        puts "La moyenne de lancé de dés sur #{nb} parties pour atteindre la marche 10 est de #{average}"
     end
     
 end
 
-average_finish_time
+# Starting method
+
+#start_game
+average_finish_time(100)
